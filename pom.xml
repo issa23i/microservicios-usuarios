@@ -56,7 +56,11 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.nttdata.microservicios.commons.alumnos</groupId>
+			<artifactId>commons-alumnos</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 
