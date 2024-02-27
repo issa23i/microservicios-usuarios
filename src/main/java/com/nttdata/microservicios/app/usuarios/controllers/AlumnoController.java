@@ -3,7 +3,9 @@ package com.nttdata.microservicios.app.usuarios.controllers;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +21,26 @@ import com.nttdata.microservicios.commons.alumnos.models.entity.Alumno;
 import com.nttdata.microservicios.app.usuarios.services.AlumnoService;
 import com.nttdata.microservicios.commons.controllers.CommonController;
 
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @RestController
 public class AlumnoController extends CommonController<Alumno, AlumnoService>{
 
+	@GetMapping("/uploads/img/{id}")
+	public ResponseEntity<?> verFoto(@PathVariable Long id){
+		Optional<Alumno> o = service.findById(id);
+		if(o.isEmpty() || o.get().getFoto() == null) {
+			return ResponseEntity.notFound().build();
+		}
+		ByteArrayResource imagen = new ByteArrayResource(o.get().getFoto());
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.IMAGE_PNG)
+				.body(imagen);
+	}
 
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> editar(@Valid @RequestBody Alumno alumno, BindingResult result, @PathVariable Long id){
 		if(result.hasErrors()) {
