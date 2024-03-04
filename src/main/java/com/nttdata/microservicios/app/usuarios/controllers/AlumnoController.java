@@ -1,6 +1,7 @@
 package com.nttdata.microservicios.app.usuarios.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.core.io.ByteArrayResource;
@@ -21,11 +22,15 @@ import com.nttdata.microservicios.commons.alumnos.models.entity.Alumno;
 import com.nttdata.microservicios.app.usuarios.services.AlumnoService;
 import com.nttdata.microservicios.commons.controllers.CommonController;
 
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @RestController
 public class AlumnoController extends CommonController<Alumno, AlumnoService>{
+	
+	@GetMapping("/alumnos-por-curso")
+	public ResponseEntity<?> obtenerAlumnnosPorCurso(@RequestParam List<Long> ids){
+		return ResponseEntity.ok(service.findAllById(ids));
+	}
 
 	@GetMapping("/uploads/img/{id}")
 	public ResponseEntity<?> verFoto(@PathVariable Long id){

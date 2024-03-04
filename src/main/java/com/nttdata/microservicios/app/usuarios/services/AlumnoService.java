@@ -9,4 +9,6 @@ import com.nttdata.microservicios.commons.services.CommonService;
 public interface AlumnoService extends CommonService<Alumno> {
 
 	public List<Alumno> findByNombreOApellido(String text);
+	
+	public Iterable<Alumno> findAllById(Iterable<Long> ids);
 }
